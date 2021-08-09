@@ -1,0 +1,10 @@
+/.idea/.gitignore
+/.idea/compiler.xml
+/.idea/jarRepositories.xml
+/.idea/misc.xml
+/target/classes/resources/sample-mp4-file.mp4
+/target/classes/webp/Main.class
+/target/classes/webp/Mp4Test.class
+/target/classes/webp/VideoAccess.class
+/target/classes/webp/VideoThread.class
+/target/classes/sample-mp4-file.mp4
