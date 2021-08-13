@@ -10,8 +10,8 @@ public class Mp4Test {
      * @param source mp4 file.
      */
     public void getThumbnail(File source) throws Exception {
-        double plusSize = 0.2;
-        int threadSize = 8;
+        double plusSize = 0.1;
+        int threadSize = 32;
 
         VideoThread[] videoThread = new VideoThread[threadSize];
 

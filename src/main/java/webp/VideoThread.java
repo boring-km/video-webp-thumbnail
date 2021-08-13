@@ -29,7 +29,7 @@ public class VideoThread extends Thread {
         try {
             grab = FrameGrab.createFrameGrab(NIOUtils.readableChannel(source));
 
-            for(int m = 0; m < 120; m++) {
+            for(int m = 0; m < 240; m++) {
                 if(m % threadSize == threadNo) {
                     double startSec = m * plusSize;
                     System.out.println(threadNo + " " + startSec);
