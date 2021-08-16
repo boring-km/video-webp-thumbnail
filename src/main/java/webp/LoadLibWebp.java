@@ -6,23 +6,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoadLibWebp {
-    public static void main(String[] args) {
+
+    public static void saveImagesToAnimatedWebp(String[] imageFilePaths, int duration, String targetPath) {
         Runtime runtime = Runtime.getRuntime();
         StringBuffer successOutput = new StringBuffer(); // 성공 스트링 버퍼
         StringBuffer errorOutput = new StringBuffer(); // 오류 스트링 버퍼
-        BufferedReader successBufferReader = null; // 성공 버퍼
-        BufferedReader errorBufferReader = null; // 오류 버퍼
-        String msg = null;
+        BufferedReader successBufferReader; // 성공 버퍼
+        BufferedReader errorBufferReader; // 오류 버퍼
+        String msg;
 
         Process process;
         List<String> cmdList = new ArrayList<>();
         try {
-//            cmdList.add("")
             cmdList.add("/bin/sh");
             cmdList.add("-c");
-//
-            cmdList.add("./img2webp ./src/main/resources/images/1.png ./src/main/resources/images/2.png -d 20 -o ./src/main/resources/webps/test2.webp");
-            String[] target = cmdList.toArray(new String[cmdList.size()]);
+            StringBuilder imageString = new StringBuilder();
+            for (String path : imageFilePaths) {
+                imageString.append(path).append(" ");
+            }
+            cmdList.add("./img2webp " + imageString + "-d " + duration + " -o " + targetPath);
+            String[] target = cmdList.toArray(new String[3]);
             process = runtime.exec(target);
 
             // shell 실행이 정상 동작했을 경우

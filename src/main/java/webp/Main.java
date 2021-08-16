@@ -5,14 +5,9 @@ import java.io.File;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        Mp4Test mp4Test = new Mp4Test();
-        VideoAccess videoAccess = new VideoAccess();
-        File source = videoAccess.getSampleVideo();
-
-        long startTime = System.currentTimeMillis();
-        mp4Test.getThumbnail(source);
-        long endTime = System.currentTimeMillis();
-        System.out.println((endTime-startTime) + "(ms)");
-
+        String videoPath = "./src/main/resources/sample-mp4-file.mp4";
+        File source = new File(videoPath);
+        Mp4Video.makeThumbnails(source, 0.1, 4, 120);
+        LoadLibWebp.saveImagesToAnimatedWebp(new String[]{}, 40, "");
     }
 }
