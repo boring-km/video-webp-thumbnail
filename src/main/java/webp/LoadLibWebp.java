@@ -18,13 +18,22 @@ public class LoadLibWebp {
         Process process;
         List<String> cmdList = new ArrayList<>();
         try {
-            cmdList.add("/bin/sh");
-            cmdList.add("-c");
             StringBuilder imageString = new StringBuilder();
             for (String path : imageFilePaths) {
                 imageString.append(path).append(" ");
             }
-            cmdList.add("./img2webp " + imageString + "-d " + duration + " -o " + targetPath);
+
+            // 운영체제 구분 (window, window 가 아니면 무조건 linux 로 판단)
+            if (System.getProperty("os.name").contains("Windows")) {
+                cmdList.add("cmd");
+                cmdList.add("/c");
+                cmdList.add(".\\img2webp.exe " + imageString + "-d " + duration + " -o " + targetPath);
+            } else {
+                cmdList.add("/bin/sh");
+                cmdList.add("-c");
+                cmdList.add("./img2webp " + imageString + "-d " + duration + " -o " + targetPath);
+            }
+
             String[] target = cmdList.toArray(new String[3]);
             process = runtime.exec(target);
 
