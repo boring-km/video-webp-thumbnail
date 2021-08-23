@@ -2,6 +2,7 @@
 - ffmpeg
 - H.264로 encoding
 - https://github.com/jcodec/jcodec
+- https://github.com/jcodec/jcodec/blob/master/src/test/java/org/jcodec/codecs/h264/H264EncoderTest.java
 
 ### JCodec으로 가능한 범위
 - https://github.com/jcodec/jcodec
