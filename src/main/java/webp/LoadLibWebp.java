@@ -20,18 +20,22 @@ public class LoadLibWebp {
         try {
             StringBuilder imageString = new StringBuilder();
             for (String path : imageFilePaths) {
-                imageString.append(path).append(" ");
+                imageString.append(path).append(" -d ").append(duration).append(" ");
             }
 
             // 운영체제 구분 (window, window 가 아니면 무조건 linux 로 판단)
             if (System.getProperty("os.name").contains("Windows")) {
                 cmdList.add("cmd");
                 cmdList.add("/c");
-                cmdList.add(".\\img2webp.exe " + imageString + "-d " + duration + " -o " + targetPath);
+                cmdList.add(".\\img2webp.exe -loop 1 " + imageString + "-o " + targetPath);
             } else {
                 cmdList.add("/bin/sh");
                 cmdList.add("-c");
-                cmdList.add("./img2webp " + imageString + "-d " + duration + " -o " + targetPath);
+                cmdList.add("./img2webp -loop 1 " + imageString + "-o " + targetPath);
+            }
+
+            for (String str : cmdList) {
+                System.out.print(str);
             }
 
             String[] target = cmdList.toArray(new String[3]);
@@ -67,5 +71,11 @@ public class LoadLibWebp {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static String[] saveImagesToWebpImages(String[] imageFilePaths) {
+        // TODO CWEBP 사용하기
+        //  png -> webp image
+        return null;
     }
 }

@@ -25,9 +25,9 @@ public class App extends Application {
     private String loadPath = "";
     private String targetPath = "";
     private int duration = 10;
-    private double interval = 0.1; // 0.1초
     private TextField intervalTextField;
     private TextField durationTextField;
+    private long time;
 
     public static void main(String[] args) {
         launch(args);
@@ -58,10 +58,12 @@ public class App extends Application {
                     try {
                         if (!durationTextField.getText().isEmpty())
                             duration = Integer.parseInt(durationTextField.getText());
-                        if (!intervalTextField.getText().isEmpty())
-                            interval = Double.parseDouble(intervalTextField.getText()) / 10;
-                        new Webp().encodeToAnimatedWebp(new File(loadPath), targetPath, duration, interval, 4);
-                        waitLabel.setText("생성완료");
+                        time = System.currentTimeMillis();
+
+                        new Webp().encodeToAnimatedWebp(new File(loadPath), targetPath, duration, 8);
+
+                        long end = System.currentTimeMillis();
+                        waitLabel.setText("생성완료, 걸린시간: " + (end - time) / 1000.0 + "초");
                     } catch (Exception e) {
                         waitLabel.setText("에러발생");
                         e.printStackTrace();

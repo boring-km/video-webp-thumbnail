@@ -1,5 +1,6 @@
 package webp;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -13,15 +14,13 @@ import org.jcodec.scale.AWTUtil;
 public class VideoCaptureThread extends Thread {
     private final int threadNo;
     private final int threadSize;
-    private final double plusSize;
     private final File source;
     private final int imageCount;
 
-    public VideoCaptureThread(File source, int threadSize, int threadNo, double plusSize, int imageCount) {
+    public VideoCaptureThread(File source, int threadSize, int threadNo, int imageCount) {
         this.source = source;
         this.threadSize = threadSize;
         this.threadNo = threadNo;
-        this.plusSize = plusSize;
         this.imageCount = imageCount;
     }
 
@@ -29,26 +28,40 @@ public class VideoCaptureThread extends Thread {
         try {
             FrameGrab grab = FrameGrab.createFrameGrab(NIOUtils.readableChannel(source));
 
-            for(int m = 0; m < imageCount; m++) {
+            for(int m = 1; m < imageCount+1; m++) {
                 if(m % threadSize == threadNo) {
+                    double plusSize = 0.1;
                     double startSec = m * plusSize;
-                    System.out.println(threadNo + " " + startSec);
 
                     int frameCount = 1;
                     grab.seekToSecondPrecise(startSec);
 
                     for (int i=0; i < frameCount; i++) {
                         Picture picture = grab.getNativeFrame();
+                        if (m % 4 == 0) {
+                            //for JDK (jcodec-javase)
+                            BufferedImage bufferedImage = AWTUtil.toBufferedImage(picture);
+                            BufferedImage resizedImage = resize(bufferedImage, (int) (bufferedImage.getWidth() / 4.4), (int) (bufferedImage.getHeight() / 4.4));
+                            ImageIO.write(resizedImage, "png",
+                                    new File("./images/" + (int)(m/4) + ".png"));
+                        }
 
-                        //for JDK (jcodec-javase)
-                        BufferedImage bufferedImage = AWTUtil.toBufferedImage(picture);
-                        ImageIO.write(bufferedImage, "png",
-                                new File("./images/" + m + ".png"));
                     }
                 }
             }
         } catch (Exception e1) {
             e1.printStackTrace();
         }
+    }
+
+    private BufferedImage resize(BufferedImage inputImage, int width, int height) {
+        BufferedImage outputImage =
+                new BufferedImage(width, height, inputImage.getType());
+
+        Graphics2D graphics2D = outputImage.createGraphics();
+        graphics2D.drawImage(inputImage, 0, 0, width, height, null);
+        graphics2D.dispose();
+
+        return outputImage;
     }
 }

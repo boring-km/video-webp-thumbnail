@@ -9,12 +9,12 @@ public class Mp4Video {
      *
      * @param source mp4 file.
      */
-    public static void makeThumbnails(File source, double timeInterval, int threadSize, int imageCount) throws Exception {
+    public static void makeThumbnails(File source, int threadSize, int imageCount) throws Exception {
 
         VideoCaptureThread[] videoCaptureThread = new VideoCaptureThread[threadSize];
 
         for(int num = 0; num < videoCaptureThread.length; num++) {
-            videoCaptureThread[num] = new VideoCaptureThread(source, threadSize, num, timeInterval, imageCount);
+            videoCaptureThread[num] = new VideoCaptureThread(source, threadSize, num, imageCount);
             videoCaptureThread[num].start();
         }
 
