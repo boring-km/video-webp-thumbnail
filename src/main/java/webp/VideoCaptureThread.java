@@ -43,7 +43,7 @@ public class VideoCaptureThread extends Thread {
                             BufferedImage bufferedImage = AWTUtil.toBufferedImage(picture);
                             BufferedImage resizedImage = resize(bufferedImage, (int) (bufferedImage.getWidth() / 4.4), (int) (bufferedImage.getHeight() / 4.4));
                             ImageIO.write(resizedImage, "png",
-                                    new File("./images/" + (int)(m/4) + ".png"));
+                                    new File("./images/" + (m/4) + ".png"));
                         }
 
                     }

@@ -14,18 +14,18 @@ public class LoadLibWebp {
         try {
             StringBuilder imageString = new StringBuilder();
             for (String path : imageFilePaths) {
-                imageString.append(path).append(" -d ").append(duration).append(" ");
+                imageString.append(path).append(" -d ").append(duration).append(" -lossy -q 50 ");
             }
 
             // 운영체제 구분 (window, window 가 아니면 무조건 linux 로 판단)
             if (System.getProperty("os.name").contains("Windows")) {
                 cmdList.add("cmd");
                 cmdList.add("/c");
-                cmdList.add(".\\img2webp.exe -loop 1 " + imageString + "-o " + targetPath);
+                cmdList.add(".\\img2webp.exe -min_size " + imageString + "-o " + targetPath);
             } else {
                 cmdList.add("/bin/sh");
                 cmdList.add("-c");
-                cmdList.add("./img2webp -loop 1 " + imageString + "-o " + targetPath);
+                cmdList.add("./img2webp -min_size " + imageString + "-o " + targetPath);
             }
 
             for (String str : cmdList) {
