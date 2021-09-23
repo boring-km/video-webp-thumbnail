@@ -39,38 +39,6 @@ public class LoadLibWebp {
         }
     }
 
-    public static String[] saveImagesToWebpImages(String[] imageFilePaths) {
-        // TODO CWEBP 사용하기
-        //  png -> webp image
-
-        List<String> cmdList = new ArrayList<>();
-
-        String[] result = new String[imageFilePaths.length];
-
-        for (int i = 0; i < imageFilePaths.length; i++) {
-            String path = imageFilePaths[i];
-            if (System.getProperty("os.name").contains("Windows")) {
-                cmdList.add("cmd");
-                cmdList.add("/c");
-                cmdList.add(".\\cwebp.exe " + path + " -o .\\webps\\" + (i+1) + ".webp");
-                result[i] = ".\\webps\\" + (i+1) + ".webp";
-            } else {
-                cmdList.add("/bin/sh");
-                cmdList.add("-c");
-                cmdList.add("./cwebp " + path + " -o ./webps/" + (i+1) + ".webp");
-                result[i] = "./webps/" + (i+1) + ".webp";
-            }
-            try {
-                printResult(cmdList);
-                cmdList.clear();
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return result;
-    }
-
     private static void printResult(List<String> cmdList) throws IOException, InterruptedException {
         Process process;
         Runtime runtime = Runtime.getRuntime();

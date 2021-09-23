@@ -20,9 +20,7 @@ public class Webp {
                 imageFilePaths[i] = "./images/" + (i+1) + ".png";
             }
         }
-        System.out.println("png -> webp");
-        String[] webpImages = LoadLibWebp.saveImagesToWebpImages(imageFilePaths);
         System.out.println("png -> animated webp");
-        LoadLibWebp.saveImagesToAnimatedWebp(webpImages, 400, targetPath);
+        LoadLibWebp.saveImagesToAnimatedWebp(imageFilePaths, 400, targetPath);
     }
 }
